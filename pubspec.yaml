@@ -13,6 +13,8 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.2
+  lottie: ^1.2.1
+  flutter_hooks: ^0.18.1
 
 dev_dependencies:
   flutter_test:
@@ -26,4 +28,17 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/lotties/
+
+  fonts:
+    - family: Biennale
+      fonts:
+        - asset: assets/fonts/Biennale-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Biennale-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Biennale-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Biennale-Bold.ttf
+          weight: 700
 
