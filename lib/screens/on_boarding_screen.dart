@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:lottie/lottie.dart';
+import 'package:sepedaan/screens/home_screen.dart';
 import 'package:sepedaan/utils/cons.dart';
+import 'package:sepedaan/utils/route_builder.dart';
 import 'package:sepedaan/widgets/buttons/sign_in_button.dart';
 
 class OnBoardingScreen extends HookWidget {
@@ -142,7 +144,9 @@ class OnBoardingScreen extends HookWidget {
               left: 64,
               right: 64,
               child: SignInButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).push(createRoute(HomeScreen()));
+                },
               ),
             ),
           ],

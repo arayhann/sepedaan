@@ -13,6 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Sepedaan',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.orange, fontFamily: 'Biennale'),
       home: const OnBoardingScreen(),
     );
