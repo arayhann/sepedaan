@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:intl/intl.dart';
+import 'package:sepedaan/providers/weather_data.dart';
 import 'package:sepedaan/utils/cons.dart';
 import 'package:sepedaan/widgets/buttons/fill_button.dart';
 import 'package:sepedaan/widgets/buttons/square_icon_button.dart';
 import 'package:sepedaan/widgets/modal_bottom_sheet/home_cycling_duration_bottom_sheet.dart';
 
-class HomeWeatherCard extends HookWidget {
+class HomeWeatherCard extends HookConsumerWidget {
   final ValueNotifier<double> bikeRight;
   final ValueNotifier<double> bikeBottom;
   const HomeWeatherCard(
@@ -13,7 +16,21 @@ class HomeWeatherCard extends HookWidget {
       : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final _weatherData = useState(ref.read(weatherDataProvider));
+
+    useEffect(() {
+      ref
+          .read(weatherDataProvider.notifier)
+          .getWeatherData(
+            lat: -6.901505602268766,
+            lng: 107.61882484602191,
+          )
+          .then((_) {
+        _weatherData.value = ref.read(weatherDataProvider);
+      });
+    }, []);
+
     return Container(
       height: 530,
       width: 335,
@@ -60,15 +77,15 @@ class HomeWeatherCard extends HookWidget {
                       height: 16,
                     ),
                     Image.asset(
-                      'assets/images/img-cloudy.png',
+                      'assets/images/img-weather-${_weatherData.value!.weatherCondition}.png',
                       width: 84,
                     ),
                     const SizedBox(
                       height: 14,
                     ),
-                    const Text(
-                      'Bandung, ID | 12. 12, 2020',
-                      style: TextStyle(
+                    Text(
+                      '${_weatherData.value!.name} | ${DateFormat('dd, MM, yyyy').format(DateTime.now())}',
+                      style: const TextStyle(
                         fontSize: 12,
                         color: blackColor,
                       ),
@@ -76,9 +93,9 @@ class HomeWeatherCard extends HookWidget {
                     const SizedBox(
                       height: 4,
                     ),
-                    const Text(
-                      'Cloudy',
-                      style: TextStyle(
+                    Text(
+                      _weatherData.value!.weather[0].main,
+                      style: const TextStyle(
                         fontSize: 16,
                         color: blackColor,
                         fontWeight: FontWeight.w500,
@@ -110,17 +127,17 @@ class HomeWeatherCard extends HookWidget {
                               children: [
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: const [
+                                  children: [
                                     Text(
-                                      '26’C',
-                                      style: TextStyle(
+                                      '${_weatherData.value!.main!.temp.toStringAsFixed(1)}°C',
+                                      style: const TextStyle(
                                         fontSize: 20,
                                         color: Colors.white,
                                         fontWeight: FontWeight.w500,
                                       ),
                                     ),
-                                    Text(
-                                      'Celcius',
+                                    const Text(
+                                      'Temperature',
                                       style: TextStyle(
                                         fontSize: 10,
                                         color: Colors.white,

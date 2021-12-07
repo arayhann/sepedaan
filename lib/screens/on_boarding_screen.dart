@@ -145,7 +145,10 @@ class OnBoardingScreen extends HookWidget {
               right: 64,
               child: SignInButton(
                 onPressed: () {
-                  Navigator.of(context).push(createRoute(HomeScreen()));
+                  Navigator.of(context).push(createRoute(
+                    const HomeScreen(),
+                    isHorizontalTransition: false,
+                  ));
                 },
               ),
             ),
