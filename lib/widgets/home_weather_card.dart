@@ -37,8 +37,10 @@ class HomeWeatherCard extends HookConsumerWidget {
       decoration: BoxDecoration(
         color: primaryColor,
         borderRadius: BorderRadius.circular(12),
-        image: const DecorationImage(
-          image: AssetImage('assets/images/img-bg-cloudy.png'),
+        image: DecorationImage(
+          image: AssetImage(
+            'assets/images/img-bg-${_weatherData.value!.weatherCondition}.png',
+          ),
           fit: BoxFit.cover,
         ),
       ),
@@ -85,9 +87,11 @@ class HomeWeatherCard extends HookConsumerWidget {
                     ),
                     Text(
                       '${_weatherData.value!.name} | ${DateFormat('dd, MM, yyyy').format(DateTime.now())}',
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 12,
-                        color: blackColor,
+                        color: _weatherData.value!.weatherCondition == 'rain'
+                            ? Colors.white
+                            : blackColor,
                       ),
                     ),
                     const SizedBox(
@@ -95,9 +99,11 @@ class HomeWeatherCard extends HookConsumerWidget {
                     ),
                     Text(
                       _weatherData.value!.weather[0].main,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 16,
-                        color: blackColor,
+                        color: _weatherData.value!.weatherCondition == 'rain'
+                            ? Colors.white
+                            : blackColor,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
